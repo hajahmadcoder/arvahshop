@@ -26,7 +26,7 @@ date_default_timezone_set('Asia/Tehran');
 define('BOT_TOKEN', '8753137767:AAHeqTaCYVOffYO5AvyjhCLR3aqs0yK5_gM');
 define('ADMIN_IDS',[7761991331]);
 define('WEBHOOK_SECRET', '');
-define('BOT_USERNAME', '');
+define('BOT_USERNAME', 'Co_ShopArvahBot');
 
 define('DB_FILE', __DIR__ . '/BLAST1.sqlite');
 define('API_URL', 'https://api.telegram.org/bot' . BOT_TOKEN . '/');
