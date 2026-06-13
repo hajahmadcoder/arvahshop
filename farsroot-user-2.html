@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>فارس روت | اینترنت وای‌فای</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0A1F44;--blue:#1254A4;--sky:#2E86DE;--light:#E8F2FF;
+  --white:#fff;--gray:#F5F7FA;--text:#1A2A3A;--muted:#607080;
+  --accent:#00B4D8;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;
+  --gold:#FFD700;--silver:#C0C0C0;--bronze:#CD7F32;
+  --radius:14px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Vazirmatn',sans-serif;background:var(--gray);color:var(--text);line-height:1.6;min-height:100vh}
+
+/* ── PAGES ── */
+.page{display:none;min-height:100vh}
+.page.active{display:block}
+
+/* ══════════════════════════════
+   LOGIN / REGISTER PAGE
+══════════════════════════════ */
+#loginPage{
+  background:linear-gradient(135deg,var(--navy) 0%,#163D7A 60%,#1254A4 100%);
+  display:flex;align-items:center;justify-content:center;padding:20px;min-height:100vh;
+}
+#loginPage.active{display:flex}
+.login-wrap{width:100%;max-width:420px}
+.login-logo{text-align:center;margin-bottom:28px}
+.login-logo h1{font-size:2rem;font-weight:800;color:#fff}
+.login-logo h1 span{color:var(--accent)}
+.login-logo p{font-size:.82rem;color:rgba(255,255,255,.55);margin-top:4px}
+.login-card{background:#fff;border-radius:20px;padding:32px 28px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.auth-tabs{display:flex;margin-bottom:22px;border-radius:10px;overflow:hidden;border:1.5px solid #D8E4F0}
+.auth-tab{flex:1;padding:10px;text-align:center;cursor:pointer;font-family:'Vazirmatn',sans-serif;font-size:.85rem;font-weight:600;background:var(--gray);color:var(--muted);border:none;transition:all .2s}
+.auth-tab.active{background:var(--blue);color:#fff}
+.auth-form{display:flex;flex-direction:column;gap:12px}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg label{font-size:.8rem;font-weight:600;color:var(--text)}
+.fg input,.fg select{padding:11px 13px;border-radius:9px;border:1.5px solid #D8E4F0;font-family:'Vazirmatn',sans-serif;font-size:.9rem;color:var(--text);background:var(--gray);outline:none;transition:border-color .2s;width:100%}
+.fg input:focus,.fg select:focus{border-color:var(--sky);background:#fff}
+.fg input::placeholder{color:rgba(96,112,128,.5)}
+.pw-wrap{position:relative}
+.pw-wrap input{width:100%}
+.pw-eye{position:absolute;left:11px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1rem;color:var(--muted)}
+.auth-btn{background:var(--blue);color:#fff;border:none;padding:13px;border-radius:10px;font-family:'Vazirmatn',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:background .2s;width:100%}
+.auth-btn:hover{background:var(--navy)}
+.auth-link{text-align:center;font-size:.82rem;color:var(--muted)}
+.auth-link a{color:var(--blue);cursor:pointer;font-weight:600}
+.err-box{background:#FEE2E2;border-right:3px solid var(--red);border-radius:8px;padding:9px 13px;font-size:.82rem;color:#B91C1C;display:none}
+.err-box.show{display:block}
+.ok-box{background:#F0FDF4;border:1.5px solid var(--green);border-radius:9px;padding:12px;font-size:.83rem;color:#15803d;text-align:center;display:none}
+.ok-box.show{display:block}
+.notice-box{background:rgba(0,180,216,.1);border-right:4px solid var(--accent);border-radius:8px;padding:10px 13px;font-size:.8rem;color:var(--navy);margin-bottom:4px}
+
+/* village dropdown */
+.vd-wrap{position:relative}
+.vd-inp{width:100%;padding:11px 13px;border-radius:9px;border:1.5px solid #D8E4F0;font-family:'Vazirmatn',sans-serif;font-size:.9rem;background:var(--gray);outline:none;cursor:pointer;transition:border-color .2s}
+.vd-inp:focus{border-color:var(--sky)}
+.vd-list{position:absolute;top:calc(100%+4px);right:0;left:0;background:#fff;border:1.5px solid #D8E4F0;border-radius:10px;box-shadow:0 8px 24px rgba(10,31,68,.12);z-index:50;overflow:hidden;display:none}
+.vd-list.open{display:block}
+.vd-search{padding:8px 10px;border-bottom:1px solid #E8EEF5}
+.vd-search input{width:100%;padding:7px 10px;border-radius:7px;border:1.5px solid #D8E4F0;font-family:'Vazirmatn',sans-serif;font-size:.84rem;outline:none}
+.vd-opts{max-height:190px;overflow-y:auto}
+.vd-opt{padding:10px 14px;cursor:pointer;font-size:.88rem;transition:background .15s;display:flex;align-items:center;gap:8px}
+.vd-opt:hover{background:var(--light)}
+.vd-opt-num{font-size:.7rem;color:var(--muted);min-width:18px}
+
+/* ══════════════════════════════
+   DASHBOARD
+══════════════════════════════ */
+#dashPage{background:var(--gray)}
+#dashPage.active{display:block}
+
+/* TOP HEADER */
+.dash-header{
+  background:linear-gradient(135deg,var(--navy) 0%,#163D7A 60%,#1254A4 100%);
+  padding:20px 5vw 28px;position:relative;overflow:hidden;
+}
+.dash-header::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+.dash-top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.dash-user-tag{background:rgba(255,255,255,.12);color:rgba(255,255,255,.8);padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600}
+.dash-name{font-size:1.15rem;font-weight:800;color:#fff;margin-bottom:2px;text-align:center}
+.dash-avatar{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:1.3rem;cursor:pointer}
+.dash-balance-section{text-align:center;margin-bottom:16px}
+.dash-bal-label{font-size:.76rem;color:rgba(255,255,255,.55);margin-bottom:4px}
+.dash-bal-amount{font-size:2.2rem;font-weight:800;color:#fff}
+.dash-bal-currency{font-size:.9rem;color:var(--accent);font-weight:600;margin-top:2px}
+.currency-toggle{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:6px 14px;cursor:pointer;font-family:'Vazirmatn',sans-serif;font-size:.8rem;color:rgba(255,255,255,.8);margin-top:10px}
+.currency-toggle:hover{background:rgba(255,255,255,.18)}
+
+/* PLANS STORY ROW */
+.story-row-wrap{background:#fff;padding:14px 0 8px;border-bottom:1px solid #E8EEF5}
+.story-row{display:flex;gap:12px;overflow-x:auto;padding:0 16px;scrollbar-width:none}
+.story-row::-webkit-scrollbar{display:none}
+.story-item{display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;cursor:pointer;min-width:68px}
+.story-ring{width:60px;height:60px;border-radius:50%;padding:3px;background:linear-gradient(135deg,var(--accent),var(--blue));display:flex;align-items:center;justify-content:center}
+.story-ring.unavail{background:linear-gradient(135deg,#ccc,#999)}
+.story-inner{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--navy),#163D7A);display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid #fff}
+.story-gb{font-size:.7rem;font-weight:800;color:var(--accent)}
+.story-label{font-size:.6rem;color:rgba(255,255,255,.6)}
+.story-name{font-size:.72rem;color:var(--text);font-weight:600;text-align:center;max-width:68px}
+.story-price{font-size:.65rem;color:var(--muted);text-align:center}
+
+/* LEVEL BADGE */
+.level-section{background:#fff;margin:10px 12px;border-radius:12px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(10,31,68,.06);cursor:pointer}
+.level-left{display:flex;align-items:center;gap:10px}
+.level-icon{font-size:1.5rem}
+.level-text{font-size:.82rem;color:var(--muted)}
+.level-name{font-size:.9rem;font-weight:800}
+.level-name.bronze{color:var(--bronze)}
+.level-name.silver{color:#888}
+.level-name.gold{color:#c8a800}
+.level-arrow{color:var(--muted);font-size:1.1rem}
+
+/* MENU GRID */
+.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:10px 12px}
+.menu-item{background:#fff;border-radius:12px;padding:16px 10px;text-align:center;cursor:pointer;transition:all .2s;box-shadow:0 2px 8px rgba(10,31,68,.05);border:1.5px solid transparent}
+.menu-item:hover{border-color:var(--sky);transform:translateY(-2px)}
+.menu-item .mi-icon{font-size:1.8rem;margin-bottom:8px}
+.menu-item .mi-label{font-size:.78rem;font-weight:600;color:var(--text)}
+
+/* TRANSACTIONS SECTION */
+.trans-section{background:#fff;margin:0 12px 12px;border-radius:12px;padding:16px;box-shadow:0 2px 8px rgba(10,31,68,.05)}
+.ts-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.ts-header h3{font-size:.9rem;font-weight:800;color:var(--navy)}
+.ts-see-all{font-size:.78rem;color:var(--blue);cursor:pointer;font-weight:600}
+.trans-item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F0F4F8}
+.trans-item:last-child{border-bottom:none}
+.ti-left{display:flex;align-items:center;gap:10px}
+.ti-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.ti-icon.plus{background:rgba(34,197,94,.1)}
+.ti-icon.minus{background:rgba(239,68,68,.1)}
+.ti-desc{font-size:.84rem;font-weight:600;color:var(--text)}
+.ti-date{font-size:.72rem;color:var(--muted)}
+.ti-amt.plus{color:var(--green);font-weight:800;font-size:.9rem}
+.ti-amt.minus{color:var(--red);font-weight:800;font-size:.9rem}
+.empty-trans{text-align:center;padding:20px;color:var(--muted);font-size:.85rem}
+
+/* INFO SECTION (contact etc) */
+.info-section{background:#fff;margin:0 12px 12px;border-radius:12px;padding:16px;box-shadow:0 2px 8px rgba(10,31,68,.05)}
+.info-section h3{font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #F0F4F8}
+.contact-row{display:flex;align-items:center;gap:10px;padding:8px 0;font-size:.84rem}
+.cr-icon{width:36px;height:36px;border-radius:9px;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.cr-label{font-size:.74rem;color:var(--muted)}
+.cr-val{font-weight:600;color:var(--text)}
+
+/* ══════════════════════════════
+   OVERLAYS / MODALS
+══════════════════════════════ */
+.overlay{display:none;position:fixed;inset:0;background:rgba(5,15,30,.75);z-index:999;align-items:center;justify-content:center;padding:16px}
+.overlay.open{display:flex}
+.modal{background:#fff;border-radius:20px;padding:28px 24px;max-width:460px;width:100%;max-height:92vh;overflow-y:auto;position:relative;box-shadow:0 20px 60px rgba(10,31,68,.3)}
+.modal-close{position:absolute;top:14px;left:16px;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--muted)}
+.modal-title{font-size:1.1rem;font-weight:800;color:var(--navy);text-align:center;margin-bottom:6px}
+.modal-sub{font-size:.83rem;color:var(--muted);text-align:center;margin-bottom:20px}
+.step{display:none}
+.step.active{display:block}
+.back-btn{background:none;border:1.5px solid #D8E4F0;border-radius:7px;padding:6px 14px;font-family:'Vazirmatn',sans-serif;font-size:.8rem;color:var(--muted);cursor:pointer;margin-bottom:14px}
+
+/* wallet */
+.cur-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.cur-btn{padding:14px;border-radius:11px;border:2px solid #D8E4F0;background:var(--gray);cursor:pointer;text-align:center;font-family:'Vazirmatn',sans-serif;transition:all .2s}
+.cur-btn:hover,.cur-btn.sel{border-color:var(--blue);background:var(--light)}
+.cb-icon{font-size:1.5rem;margin-bottom:5px}
+.cb-name{font-size:.88rem;font-weight:700;color:var(--navy)}
+.amt-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.amt-opt{padding:10px;border-radius:9px;border:2px solid #D8E4F0;background:var(--gray);cursor:pointer;text-align:center;font-family:'Vazirmatn',sans-serif;font-size:.85rem;font-weight:700;color:var(--navy);transition:all .2s}
+.amt-opt:hover,.amt-opt.sel{border-color:var(--blue);background:var(--light);color:var(--blue)}
+
+/* receipt */
+.receipt{background:linear-gradient(135deg,#fff8e1,#fff3cd);border:2px solid var(--orange);border-radius:13px;padding:20px;margin:12px 0}
+.receipt-row{display:flex;justify-content:space-between;margin-bottom:7px;font-size:.84rem}
+.receipt-row .rl{color:var(--muted)}
+.receipt-row .rv{font-weight:700}
+.r-dash{border:none;border-top:1px dashed var(--orange);margin:10px 0}
+.alert-info{background:var(--light);border-right:4px solid var(--sky);border-radius:9px;padding:12px 14px;margin:12px 0;font-size:.81rem;line-height:1.7}
+.chip{display:flex;align-items:center;gap:9px;background:var(--gray);border-radius:9px;padding:8px 12px;font-size:.81rem;margin-bottom:6px}
+.chip .ch-icon{font-size:1rem}
+.chip .ch-val{font-weight:700;color:var(--navy)}
+.chip .ch-label{font-size:.7rem;color:var(--muted)}
+.big-btn{width:100%;padding:13px;border-radius:10px;border:none;font-family:'Vazirmatn',sans-serif;font-weight:800;font-size:.95rem;cursor:pointer;transition:all .2s;margin-top:8px}
+.btn-blue{background:var(--blue);color:#fff}
+.btn-blue:hover{background:var(--navy)}
+.btn-accent{background:var(--accent);color:var(--navy)}
+.btn-accent:hover{opacity:.88}
+.btn-green{background:var(--green);color:#fff}
+.btn-orange{background:var(--orange);color:#fff}
+
+/* LEVEL MODAL */
+.level-card{border-radius:14px;padding:20px;margin-bottom:12px;cursor:pointer;border:2px solid transparent;transition:all .2s}
+.level-card:hover{transform:translateY(-2px)}
+.level-card.bronze-card{background:linear-gradient(135deg,#FFF3E0,#FFE0B2);border-color:#CD7F32}
+.level-card.silver-card{background:linear-gradient(135deg,#F5F5F5,#E0E0E0);border-color:#9E9E9E}
+.level-card.gold-card{background:linear-gradient(135deg,#FFFDE7,#FFF9C4);border-color:#FFD700}
+.lc-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.lc-icon{font-size:1.8rem}
+.lc-name{font-size:1rem;font-weight:800}
+.lc-badge{font-size:.7rem;font-weight:700;padding:2px 9px;border-radius:20px}
+.lc-features{font-size:.8rem;color:var(--muted);line-height:1.8}
+.lc-features li{margin-right:12px}
+
+/* plan buy */
+.plan-sum-box{background:var(--light);border-radius:11px;padding:14px;text-align:center;margin-bottom:16px}
+.plan-sum-name{font-size:1.2rem;font-weight:800;color:var(--navy)}
+.plan-sum-price{font-size:.9rem;color:var(--blue);font-weight:700;margin-top:3px}
+
+/* TRANSACTIONS PAGE */
+#transPage{background:var(--gray)}
+.page-header{background:var(--navy);padding:16px 5vw;display:flex;align-items:center;gap:14px}
+.ph-back{background:rgba(255,255,255,.1);border:none;color:#fff;width:36px;height:36px;border-radius:9px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center}
+.ph-title{font-size:1rem;font-weight:800;color:#fff}
+.trans-full-list{padding:12px}
+.trans-full-item{background:#fff;border-radius:11px;padding:14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(10,31,68,.05)}
+
+/* WALLET PAGE */
+#walletPage{background:var(--gray)}
+.wallet-header{background:linear-gradient(135deg,var(--navy),#163D7A);padding:24px 5vw;text-align:center}
+.wh-label{font-size:.78rem;color:rgba(255,255,255,.55);margin-bottom:4px}
+.wh-amount{font-size:2.4rem;font-weight:800;color:#fff}
+.wh-currency{font-size:.85rem;color:var(--accent);margin-top:2px}
+.wallet-body{padding:12px}
+.wallet-menu{display:flex;flex-direction:column;gap:10px}
+.wm-item{background:#fff;border-radius:12px;padding:16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-shadow:0 2px 8px rgba(10,31,68,.05);transition:all .2s}
+.wm-item:hover{transform:translateX(-3px)}
+.wm-left{display:flex;align-items:center;gap:12px}
+.wm-icon{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+.wm-name{font-size:.9rem;font-weight:700;color:var(--navy)}
+.wm-desc{font-size:.75rem;color:var(--muted);margin-top:1px}
+
+/* LOADING */
+.loading-overlay{display:none;position:fixed;inset:0;background:rgba(10,31,68,.5);z-index:9998;align-items:center;justify-content:center}
+.loading-overlay.show{display:flex}
+.spinner{width:44px;height:44px;border:4px solid rgba(255,255,255,.2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.notify{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:11px 22px;border-radius:10px;font-size:.86rem;font-weight:600;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;max-width:90vw;text-align:center}
+.notify.show{opacity:1}
+
+/* UPGRADE MODAL */
+.upgrade-step-box{background:var(--light);border-radius:13px;padding:18px;margin-bottom:16px;text-align:center}
+.usb-icon{font-size:3rem;margin-bottom:8px}
+.usb-title{font-size:1rem;font-weight:800;color:var(--navy)}
+.usb-desc{font-size:.82rem;color:var(--muted);margin-top:6px;line-height:1.7}
+
+@media(max-width:480px){.modal{padding:22px 16px}.menu-grid{gap:8px;padding:8px}}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN PAGE ══ -->
+<div class="page active" id="loginPage">
+  <div class="login-wrap">
+    <div class="login-logo">
+      <h1>فارس<span>روت</span></h1>
+      <p>اینترنت وای‌فای حوزه فاسک ساغر غور</p>
+    </div>
+    <div class="login-card">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">ورود</button>
+        <button class="auth-tab" id="tab-reg" onclick="switchTab('reg')">ثبت‌نام</button>
+      </div>
+      <!-- LOGIN -->
+      <div id="login-form" class="auth-form">
+        <div class="fg"><label>آیدی کاربری</label><input type="text" id="li-id" placeholder="FR12345"/></div>
+        <div class="fg"><label>رمز عبور</label><div class="pw-wrap"><input type="password" id="li-pw" placeholder="رمز عبور"/><button class="pw-eye" onclick="togglePw('li-pw')">👁️</button></div></div>
+        <div class="err-box" id="li-err"></div>
+        <button class="auth-btn" onclick="doLogin()">ورود به حساب</button>
+        <div class="auth-link" style="margin-top:8px">حساب ندارید؟ <a onclick="switchTab('reg')">ثبت‌نام کنید</a></div>
+      </div>
+      <!-- REGISTER -->
+      <div id="reg-form" class="auth-form" style="display:none">
+        <div class="notice-box">⚠️ ثبت‌نام مخصوص کاربران <strong>حوزه فاسک</strong> می‌باشد.</div>
+        <div class="fg"><label>نام و نام فامیلی</label><input type="text" id="rg-name" placeholder="نام کامل شما"/></div>
+        <div class="fg"><label>نام پدر</label><input type="text" id="rg-father" placeholder="نام پدر"/></div>
+        <div class="fg"><label>شماره تماس (ایران یا افغانستان)</label><input type="tel" id="rg-phone" placeholder="۰۷XX یا ۰۹XX"/></div>
+        <div class="fg">
+          <label>محل سکونت (قریه)</label>
+          <div class="vd-wrap" id="villageWrap">
+            <input class="vd-inp" type="text" id="vd-disp" placeholder="انتخاب قریه 🔽" readonly onclick="toggleVD()"/>
+            <input type="hidden" id="rg-village"/>
+            <div class="vd-list" id="vdList">
+              <div class="vd-search"><input type="text" id="vd-srch" placeholder="🔍 جستجو..." oninput="filterVD()"/></div>
+              <div class="vd-opts" id="vdOpts"></div>
+            </div>
+          </div>
+        </div>
+        <div class="fg"><label>رمز عبور دلخواه</label><div class="pw-wrap"><input type="password" id="rg-pw" placeholder="حداقل ۴ کاراکتر"/><button class="pw-eye" onclick="togglePw('rg-pw')">👁️</button></div></div>
+        <div class="err-box" id="rg-err"></div>
+        <button class="auth-btn" onclick="doRegister()">ثبت‌نام</button>
+        <div class="ok-box" id="rg-ok"></div>
+        <div class="auth-link" style="margin-top:8px">حساب دارید؟ <a onclick="switchTab('login')">وارد شوید</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DASHBOARD PAGE ══ -->
+<div class="page" id="dashPage">
+  <!-- HEADER -->
+  <div class="dash-header">
+    <div class="dash-top-row">
+      <div class="dash-user-tag" id="dh-tag">کاربر</div>
+      <div class="dash-name" id="dh-name">—</div>
+      <div class="dash-avatar" onclick="showPage('walletPage')">👤</div>
+    </div>
+    <div class="dash-balance-section">
+      <div class="dash-bal-label">موجودی کیف پول</div>
+      <div class="dash-bal-amount" id="dh-amount">۰</div>
+      <div class="dash-bal-currency" id="dh-currency">افغانی</div>
+      <div style="text-align:center">
+        <div class="currency-toggle" onclick="toggleCurrency()">
+          <span id="cur-flag">🇦🇫</span>
+          <span id="cur-label">افغانی</span>
+          <span>↕️</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLANS STORY -->
+  <div class="story-row-wrap">
+    <div class="story-row" id="storyRow">
+      <div style="color:var(--muted);font-size:.82rem;padding:8px">در حال بارگذاری...</div>
+    </div>
+  </div>
+
+  <!-- LEVEL -->
+  <div class="level-section" onclick="openLevelModal()">
+    <div class="level-left">
+      <div class="level-icon" id="lvl-icon">🥉</div>
+      <div>
+        <div class="level-text">سطح کاربری شما:</div>
+        <div class="level-name bronze" id="lvl-name">برنزی</div>
+      </div>
+    </div>
+    <div class="level-arrow">‹</div>
+  </div>
+
+  <!-- MENU GRID -->
+  <div class="menu-grid">
+    <div class="menu-item" onclick="showPage('walletPage')">
+      <div class="mi-icon">👜</div>
+      <div class="mi-label">مشاهده کیف پول</div>
+    </div>
+    <div class="menu-item" onclick="openChargeWallet()">
+      <div class="mi-icon">💳</div>
+      <div class="mi-label">شارژ موجودی</div>
+    </div>
+    <div class="menu-item" onclick="openConvert()">
+      <div class="mi-icon">🔄</div>
+      <div class="mi-label">تبدیل موجودی</div>
+    </div>
+    <div class="menu-item" onclick="showPage('transPage')">
+      <div class="mi-icon">📋</div>
+      <div class="mi-label">تاریخچه سفارش‌ها</div>
+    </div>
+    <div class="menu-item" onclick="openUpgrade()">
+      <div class="mi-icon">⬆️</div>
+      <div class="mi-label">ارتقاء سطح</div>
+    </div>
+    <div class="menu-item" onclick="doLogout()">
+      <div class="mi-icon">🚪</div>
+      <div class="mi-label">خروج</div>
+    </div>
+  </div>
+
+  <!-- RECENT TRANS -->
+  <div class="trans-section">
+    <div class="ts-header">
+      <h3>📊 آخرین تراکنش‌ها</h3>
+      <span class="ts-see-all" onclick="showPage('transPage')">مشاهده همه</span>
+    </div>
+    <div id="recentTrans"><div class="empty-trans">تراکنشی ندارید</div></div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="info-section">
+    <h3>📞 ارتباط با ما</h3>
+    <div class="contact-row"><div class="cr-icon">💬</div><div><div class="cr-label">تلگرام</div><div class="cr-val">@leader_arvah</div></div></div>
+    <div class="contact-row"><div class="cr-icon">📱</div><div><div class="cr-label">واتساپ / ایمو</div><div class="cr-val">+98 992 969 774</div></div></div>
+    <div class="contact-row"><div class="cr-icon">📧</div><div><div class="cr-label">ایمیل پشتیبانی</div><div class="cr-val">haj.ahmad.coder@gmail.com</div></div></div>
+    <div class="contact-row"><div class="cr-icon">📍</div><div><div class="cr-label">آدرس</div><div class="cr-val">حوزه فاسک، ساغر، غور — نمایندگی وکیل احمد حیدری</div></div></div>
+  </div>
+  <div style="height:20px"></div>
+</div>
+
+<!-- ══ WALLET PAGE ══ -->
+<div class="page" id="walletPage">
+  <div class="wallet-header">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <button class="ph-back" onclick="showPage('dashPage')" style="background:rgba(255,255,255,.1);border:none;color:#fff;width:36px;height:36px;border-radius:9px;cursor:pointer;font-size:1.1rem">←</button>
+      <span style="font-size:1rem;font-weight:800;color:#fff">کیف پول</span>
+    </div>
+    <div class="wh-label">موجودی کل</div>
+    <div class="wh-amount" id="wp-amount">۰</div>
+    <div class="wh-currency" id="wp-currency">افغانی</div>
+    <div style="display:flex;gap:12px;justify-content:center;margin-top:10px">
+      <div style="text-align:center;background:rgba(255,255,255,.1);border-radius:10px;padding:8px 16px">
+        <div style="font-size:.7rem;color:rgba(255,255,255,.55)">افغانی</div>
+        <div style="font-weight:800;color:#fff" id="wp-afn">۰</div>
+      </div>
+      <div style="text-align:center;background:rgba(255,255,255,.1);border-radius:10px;padding:8px 16px">
+        <div style="font-size:.7rem;color:rgba(255,255,255,.55)">تومان</div>
+        <div style="font-weight:800;color:#fff" id="wp-irr">۰</div>
+      </div>
+    </div>
+  </div>
+  <div class="wallet-body">
+    <div class="wallet-menu">
+      <div class="wm-item" onclick="openChargeWallet()">
+        <div class="wm-left">
+          <div class="wm-icon" style="background:rgba(34,197,94,.1)">💳</div>
+          <div><div class="wm-name">شارژ موجودی</div><div class="wm-desc">افزایش موجودی کیف پول</div></div>
+        </div>
+        <span style="color:var(--muted)">‹</span>
+      </div>
+      <div class="wm-item" onclick="openConvert()">
+        <div class="wm-left">
+          <div class="wm-icon" style="background:rgba(0,180,216,.1)">🔄</div>
+          <div><div class="wm-name">تبدیل موجودی</div><div class="wm-desc">تبدیل بین ارزها</div></div>
+        </div>
+        <span style="color:var(--muted)">‹</span>
+      </div>
+      <div class="wm-item" onclick="showPage('transPage')">
+        <div class="wm-left">
+          <div class="wm-icon" style="background:rgba(18,84,164,.1)">📋</div>
+          <div><div class="wm-name">تاریخچه تراکنش‌ها</div><div class="wm-desc">مشاهده همه تراکنش‌ها</div></div>
+        </div>
+        <span style="color:var(--muted)">‹</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TRANSACTIONS PAGE ══ -->
+<div class="page" id="transPage">
+  <div class="page-header">
+    <button class="ph-back" onclick="showPage('dashPage')">←</button>
+    <span class="ph-title">📋 تاریخچه سفارش‌ها</span>
+  </div>
+  <div class="trans-full-list" id="transFullList">
+    <div class="empty-trans">تراکنشی ندارید</div>
+  </div>
+</div>
+
+<!-- ══ OVERLAYS ══ -->
+
+<!-- LEVEL MODAL -->
+<div class="overlay" id="levelOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeO('levelOverlay')">✕</button>
+    <div class="modal-title">سطح کاربری</div>
+    <div class="modal-sub">سطح خود را مشاهده یا ارتقاء دهید</div>
+    <div class="level-card bronze-card">
+      <div class="lc-top"><div class="lc-icon">🥉</div><div><div class="lc-name" style="color:var(--bronze)">سطح برنزی</div><span class="lc-badge" style="background:rgba(205,127,50,.15);color:var(--bronze)">پایه</span></div></div>
+      <ul class="lc-features" style="list-style:none"><li>✓ ورود به سایت</li><li>✗ خرید پلن (غیرفعال)</li><li>✗ شارژ موجودی (غیرفعال)</li></ul>
+    </div>
+    <div class="level-card silver-card">
+      <div class="lc-top"><div class="lc-icon">🥈</div><div><div class="lc-name" style="color:#888">سطح نقره‌ای</div><span class="lc-badge" style="background:rgba(158,158,158,.15);color:#777">استاندارد</span></div></div>
+      <ul class="lc-features" style="list-style:none"><li>✓ خرید پلن‌های زیر ۱۰ گیگ</li><li>✓ شارژ تا ۱,۰۰۰ افغ / ۱۰ میلیون تومان</li><li>✗ پلن‌های بالاتر (نیاز به طلایی)</li></ul>
+    </div>
+    <div class="level-card gold-card">
+      <div class="lc-top"><div class="lc-icon">🥇</div><div><div class="lc-name" style="color:#c8a800">سطح طلایی</div><span class="lc-badge" style="background:rgba(255,215,0,.15);color:#c8a800">پیشرفته</span></div></div>
+      <ul class="lc-features" style="list-style:none"><li>✓ خرید تمام پلن‌ها</li><li>✓ شارژ نامحدود</li><li>✓ تمام امکانات</li></ul>
+    </div>
+    <button class="big-btn btn-blue" onclick="closeO('levelOverlay');openUpgrade()">ارتقاء سطح</button>
+  </div>
+</div>
+
+<!-- UPGRADE MODAL -->
+<div class="overlay" id="upgradeOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeO('upgradeOverlay')">✕</button>
+    <div id="up-s1" class="step active">
+      <div class="modal-title">⬆️ ارتقاء سطح</div>
+      <div class="modal-sub">کدام سطح را می‌خواهید فعال کنید؟</div>
+      <div class="level-card silver-card" style="cursor:pointer" onclick="upgradeSelect('silver')">
+        <div class="lc-top"><div class="lc-icon">🥈</div><div><div class="lc-name" style="color:#888">سطح نقره‌ای</div></div></div>
+        <div style="font-size:.8rem;color:var(--muted)">ایمیل + کد تأیید لازم است</div>
+      </div>
+      <div class="level-card gold-card" style="cursor:pointer;margin-top:10px" onclick="upgradeSelect('gold')">
+        <div class="lc-top"><div class="lc-icon">🥇</div><div><div class="lc-name" style="color:#c8a800">سطح طلایی</div></div></div>
+        <div style="font-size:.8rem;color:var(--muted)">نیاز به تأیید ادمین دارد</div>
+      </div>
+    </div>
+    <!-- SILVER UPGRADE -->
+    <div id="up-s-silver" class="step">
+      <button class="back-btn" onclick="showModalStep('up-s1')">→ برگشت</button>
+      <div class="modal-title">🥈 فعال‌سازی سطح نقره‌ای</div>
+      <div class="modal-sub">ایمیل خود را وارد کنید</div>
+      <div class="fg" style="margin-bottom:12px"><label>آدرس ایمیل</label><input type="email" id="sv-email" placeholder="example@gmail.com"/></div>
+      <div class="err-box" id="sv-err"></div>
+      <button class="big-btn btn-blue" onclick="sendSilverCode()">ارسال کد تأیید</button>
+    </div>
+    <div id="up-s-silver2" class="step">
+      <button class="back-btn" onclick="showModalStep('up-s-silver')">→ برگشت</button>
+      <div class="modal-title">📧 کد تأیید</div>
+      <div class="modal-sub" id="sv-code-sub">کد ۶ رقمی ارسال شده به ایمیل را وارد کنید</div>
+      <div class="fg" style="margin-bottom:12px"><label>کد تأیید</label><input type="text" id="sv-code-inp" placeholder="------" maxlength="6" style="text-align:center;font-size:1.4rem;letter-spacing:8px"/></div>
+      <div class="err-box" id="sv-code-err"></div>
+      <button class="big-btn btn-blue" onclick="verifySilverCode()">تأیید</button>
+    </div>
+    <!-- GOLD UPGRADE -->
+    <div id="up-s-gold" class="step">
+      <button class="back-btn" onclick="showModalStep('up-s1')">→ برگشت</button>
+      <div class="upgrade-step-box">
+        <div class="usb-icon">🥇</div>
+        <div class="usb-title">فعال‌سازی سطح طلایی</div>
+        <div class="usb-desc">فعال‌سازی این سطح توسط ادمین انجام می‌شود. لطفاً با پشتیبانی تماس بگیرید.</div>
+      </div>
+      <button class="big-btn btn-orange" onclick="showModalStep('up-s-gold-receipt')">درخواست ارتقاء طلایی</button>
+    </div>
+    <div id="up-s-gold-receipt" class="step">
+      <button class="back-btn" onclick="showModalStep('up-s-gold')">→ برگشت</button>
+      <div class="modal-title">🧾 رسید درخواست</div>
+      <div class="receipt">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="font-size:1.2rem">📋</span><strong style="color:#92400e">درخواست ارتقاء سطح طلایی</strong></div>
+        <div class="receipt-row"><span class="rl">نام:</span><span class="rv" id="gr-name">—</span></div>
+        <div class="receipt-row"><span class="rl">آیدی:</span><span class="rv" id="gr-id">—</span></div>
+        <div class="receipt-row"><span class="rl">سطح فعلی:</span><span class="rv" id="gr-level">—</span></div>
+        <div class="receipt-row"><span class="rl">قریه:</span><span class="rv" id="gr-village">—</span></div>
+        <div class="receipt-row"><span class="rl">تاریخ:</span><span class="rv" id="gr-date">—</span></div>
+        <div class="r-dash"></div>
+        <div style="font-size:.75rem;color:#92400e;text-align:center" id="gr-code">—</div>
+      </div>
+      <div class="alert-info">📸 از این رسید عکس بگیرید و به نماینده یا پشتیبانی ارسال کنید.</div>
+      <div class="chip"><span class="ch-icon">💬</span><div><div class="ch-label">تلگرام</div><div class="ch-val">@leader_arvah</div></div></div>
+      <div class="chip"><span class="ch-icon">📱</span><div><div class="ch-label">واتساپ</div><div class="ch-val">+98 992 969 774</div></div></div>
+      <button class="big-btn btn-accent" onclick="sendGoldRequest()">📨 ارسال رسید به واتساپ</button>
+    </div>
+  </div>
+</div>
+
+<!-- WALLET CHARGE MODAL -->
+<div class="overlay" id="chargeOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeO('chargeOverlay')">✕</button>
+    <div id="ch-s1" class="step active">
+      <div class="modal-title">💳 شارژ موجودی</div>
+      <div class="modal-sub">واحد پول را انتخاب کنید</div>
+      <div class="cur-btns">
+        <div class="cur-btn" onclick="chSelectCur('afn',this)"><div class="cb-icon">🇦🇫</div><div class="cb-name">افغانی</div></div>
+        <div class="cur-btn" onclick="chSelectCur('irr',this)"><div class="cb-icon">🇮🇷</div><div class="cb-name">تومان</div></div>
+      </div>
+    </div>
+    <div id="ch-s2" class="step">
+      <button class="back-btn" onclick="showModalStep('ch-s1')">→ برگشت</button>
+      <div class="modal-title">مقدار را انتخاب کنید</div>
+      <div class="modal-sub" id="ch-cur-label">—</div>
+      <div class="amt-opts" id="ch-amts"></div>
+      <div class="fg" style="margin-bottom:12px"><label>مقدار دلخواه</label><input type="number" id="ch-custom" placeholder="وارد کنید"/></div>
+      <button class="big-btn btn-blue" onclick="chGoReceipt()">ادامه</button>
+    </div>
+    <div id="ch-s3" class="step">
+      <button class="back-btn" onclick="showModalStep('ch-s2')">→ برگشت</button>
+      <div class="modal-title">🧾 رسید شارژ</div>
+      <div class="receipt">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="font-size:1.2rem">📋</span><strong style="color:#92400e">رسید افزایش موجودی فارس روت</strong></div>
+        <div class="receipt-row"><span class="rl">نام:</span><span class="rv" id="ch-rc-name">—</span></div>
+        <div class="receipt-row"><span class="rl">مبلغ:</span><span class="rv" id="ch-rc-amt">—</span></div>
+        <div class="receipt-row"><span class="rl">کد:</span><span class="rv" id="ch-rc-code">—</span></div>
+        <div class="r-dash"></div>
+        <div style="font-size:.75rem;color:#92400e;text-align:center" id="ch-rc-date">—</div>
+      </div>
+      <div class="alert-info">📸 از این رسید عکس بگیرید و به <strong>نماینده محل</strong> ارسال کنید یا از طریق پشتیبانی اقدام کنید.</div>
+      <div class="chip"><span class="ch-icon">💬</span><div><div class="ch-label">تلگرام</div><div class="ch-val">@leader_arvah</div></div></div>
+      <div class="chip"><span class="ch-icon">📱</span><div><div class="ch-label">واتساپ</div><div class="ch-val">+98 992 969 774</div></div></div>
+      <button class="big-btn btn-blue" onclick="chSendReq()">📨 ارسال درخواست</button>
+    </div>
+    <div id="ch-s4" class="step">
+      <div style="text-align:center;padding:20px 0"><div style="font-size:3rem;margin-bottom:10px">✅</div><div class="modal-title">درخواست ارسال شد!</div><div class="modal-sub">پس از بررسی توسط ادمین، موجودی شما شارژ می‌شود.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- BUY PLAN MODAL -->
+<div class="overlay" id="buyOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeO('buyOverlay')">✕</button>
+    <div class="plan-sum-box"><div class="plan-sum-name" id="bp-name">—</div><div class="plan-sum-price" id="bp-price">—</div></div>
+    <div id="bp-s1" class="step active">
+      <div class="modal-title">خرید پلن</div>
+      <div class="modal-sub" id="bp-msg">—</div>
+      <div class="err-box show" id="bp-warn" style="display:none!important"></div>
+      <button class="big-btn btn-accent" style="margin-top:14px" onclick="confirmBuy()">✅ تأیید و خرید</button>
+    </div>
+    <div id="bp-s2" class="step">
+      <div style="text-align:center;padding:16px 0"><div style="font-size:3rem;margin-bottom:10px">✅</div><div class="modal-title">خرید موفق!</div><div class="modal-sub" id="bp-ok">—</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- EMAIL VERIFY (silver) SIMULATE NOTE: real email needs backend -->
+<div class="loading-overlay" id="loadingO"><div class="spinner"></div></div>
+<div class="notify" id="notify"></div>
+
+<script>
+const SUPA_URL='https://wnsqsjvramfvyhrjckuo.supabase.co';
+const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Induc3FzanZyYW1mdnlocmpja3VvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExNzg4NDEsImV4cCI6MjA5Njc1NDg0MX0.8RUZucVBqhPJgch_rQlnnl-Ja1zLv-2MqX093EpiOiQ';
+const AFN_TO_IRR=580;
+const VILLAGES=['سباقان','جیلان','اسفیاسنگ','بوتی','بنی','بسپی','رباتا','بریزی'];
+const PLAN_DEFS=[
+  {id:'p1',name:'پلن ۱ گیگ',gb:1,icon:'📶'},
+  {id:'p2',name:'پلن ۲ گیگ',gb:2,icon:'📶'},
+  {id:'p5',name:'پلن ۵ گیگ',gb:5,icon:'📶'},
+  {id:'p10',name:'پلن ۱۰ گیگ',gb:10,icon:'📶'},
+  {id:'p20',name:'پلن ۲۰ گیگ',gb:20,icon:'⚡'},
+  {id:'punlim',name:'پلن نامحدود',gb:null,icon:'🚀'}
+];
+
+// ── API ──
+async function api(table,opts={}){
+  const{method='GET',filter='',body,select='*',order=''}=opts;
+  let url=`${SUPA_URL}/rest/v1/${table}?select=${select}`;
+  if(filter)url+=`&${filter}`;
+  if(order)url+=`&order=${order}`;
+  const res=await fetch(url,{method,headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json','Prefer':method==='POST'?'return=representation':''},body:body?JSON.stringify(body):undefined});
+  if(!res.ok)throw new Error(await res.text());
+  return method==='DELETE'?true:res.json();
+}
+async function apiUp(table,filter,body){
+  const url=`${SUPA_URL}/rest/v1/${table}?${filter}`;
+  const res=await fetch(url,{method:'PATCH',headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(body)});
+  if(!res.ok)throw new Error(await res.text());
+  return res.json();
+}
+
+// ── HELPERS ──
+function loading(s){document.getElementById('loadingO').classList.toggle('show',s);}
+function showNotify(msg){const n=document.getElementById('notify');n.textContent=msg;n.classList.add('show');setTimeout(()=>n.classList.remove('show'),3000);}
+function nFa(n){return Number(n||0).toLocaleString('fa-IR');}
+function genId(){return 'FR'+Math.floor(10000+Math.random()*90000);}
+function togglePw(id){const i=document.getElementById(id);i.type=i.type==='password'?'text':'password';}
+function closeO(id){document.getElementById(id).classList.remove('open');}
+function showModalStep(id){
+  const parent=document.getElementById(id).closest('.modal');
+  parent.querySelectorAll('.step').forEach(s=>{s.classList.remove('active');s.style.display='none';});
+  const el=document.getElementById(id);if(el){el.classList.add('active');el.style.display='block';}
+}
+
+// ── PAGES ──
+let prevPage='dashPage';
+function showPage(id){
+  prevPage=document.querySelector('.page.active')?.id||'dashPage';
+  document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active');p.style.display='none';});
+  const p=document.getElementById(id);
+  p.classList.add('active');
+  p.style.display='block';
+  if(id==='transPage')renderTransFull();
+  if(id==='walletPage')updateWalletPage();
+  window.scrollTo(0,0);
+}
+
+// ── SESSION ──
+let currentUser=null;
+let displayCurrency='afn';
+let silverCode='';
+
+function getSession(){try{return JSON.parse(localStorage.getItem('fr_sess'));}catch{return null;}}
+function setSession(userId){localStorage.setItem('fr_sess',JSON.stringify({userId}));}
+function clearSession(){localStorage.removeItem('fr_sess');currentUser=null;}
+
+// ── AUTH ──
+function switchTab(tab){
+  document.getElementById('tab-login').classList.toggle('active',tab==='login');
+  document.getElementById('tab-reg').classList.toggle('active',tab==='reg');
+  document.getElementById('login-form').style.display=tab==='login'?'flex':'none';
+  document.getElementById('reg-form').style.display=tab==='reg'?'flex':'none';
+}
+
+async function doLogin(){
+  const id=document.getElementById('li-id').value.trim();
+  const pw=document.getElementById('li-pw').value;
+  const err=document.getElementById('li-err');
+  err.classList.remove('show');
+  if(!id||!pw){err.textContent='همه فیلدها را پر کنید';err.classList.add('show');return;}
+  loading(true);
+  try{
+    const users=await api('users',{filter:`id=eq.${id}&password=eq.${pw}`});
+    if(!users.length){err.textContent='آیدی یا رمز اشتباه است';err.classList.add('show');return;}
+    const user=users[0];
+    if(user.status==='blocked'){err.textContent='حساب شما مسدود است. با پشتیبانی تماس بگیرید.';err.classList.add('show');return;}
+    setSession(user.id);
+    enterDash(user);
+  }catch(e){err.textContent='خطا: '+e.message;err.classList.add('show');}
+  finally{loading(false);}
+}
+
+async function doRegister(){
+  const name=document.getElementById('rg-name').value.trim();
+  const father=document.getElementById('rg-father').value.trim();
+  const phone=document.getElementById('rg-phone').value.trim();
+  const village=document.getElementById('rg-village').value;
+  const pw=document.getElementById('rg-pw').value;
+  const err=document.getElementById('rg-err');
+  err.classList.remove('show');
+  document.getElementById('rg-ok').classList.remove('show');
+  if(!name||!father||!phone||!village||pw.length<4){
+    err.textContent='همه فیلدها الزامی هستند (رمز حداقل ۴ کاراکتر)';
+    err.classList.add('show');return;
+  }
+  loading(true);
+  try{
+    const newId=genId();
+    const newUser={
+      id:newId,name,father_name:father,phone,village,
+      password:pw,status:'active',level:'bronze',
+      wallet_afn:0,transactions:[],active_plan:null,
+      created_at:new Date().toLocaleDateString('fa-IR')
+    };
+    await api('users',{method:'POST',body:newUser});
+    // Add registration transaction
+    const trans=[{desc:'ثبت‌نام — سطح برنزی فعال شد',amount:0,type:'info',date:new Date().toLocaleDateString('fa-IR')}];
+    await apiUp('users',`id=eq.${newId}`,{transactions:trans});
+    const ok=document.getElementById('rg-ok');
+    ok.innerHTML=`✅ ثبت‌نام موفق!<br>آیدی شما: <strong style="font-family:monospace;font-size:1.1rem">${newId}</strong><br><small>این آیدی را ذخیره کنید</small>`;
+    ok.classList.add('show');
+    // auto login
+    setTimeout(()=>{setSession(newId);enterDash(newUser);},1500);
+  }catch(e){err.textContent='خطا: '+e.message;err.classList.add('show');}
+  finally{loading(false);}
+}
+
+function doLogout(){clearSession();showPage('loginPage');document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active');p.style.display='none';});document.getElementById('loginPage').classList.add('active');document.getElementById('loginPage').style.display='flex';}
+
+// ── DASHBOARD ──
+function enterDash(user){
+  currentUser=user;
+  updateDashUI();
+  showPage('dashPage');
+  loadPlansStory();
+}
+
+function updateDashUI(){
+  if(!currentUser)return;
+  const u=currentUser;
+  // level
+  const lvlMap={bronze:{icon:'🥉',name:'برنزی',cls:'bronze'},silver:{icon:'🥈',name:'نقره‌ای',cls:'silver'},gold:{icon:'🥇',name:'طلایی',cls:'gold'}};
+  const lv=lvlMap[u.level||'bronze'];
+  document.getElementById('dh-tag').textContent='کاربر';
+  document.getElementById('dh-name').textContent=u.name;
+  document.getElementById('lvl-icon').textContent=lv.icon;
+  const lvlNameEl=document.getElementById('lvl-name');
+  lvlNameEl.textContent='سطح '+lv.name;
+  lvlNameEl.className='level-name '+lv.cls;
+  updateBalanceDisplay();
+  renderRecentTrans();
+}
+
+function updateBalanceDisplay(){
+  if(!currentUser)return;
+  const afn=currentUser.wallet_afn||0;
+  const irr=Math.round(afn*AFN_TO_IRR);
+  const val=displayCurrency==='afn'?afn:irr;
+  const cur=displayCurrency==='afn'?'افغانی':'تومان';
+  document.getElementById('dh-amount').textContent=nFa(val);
+  document.getElementById('dh-currency').textContent=cur;
+  document.getElementById('cur-flag').textContent=displayCurrency==='afn'?'🇦🇫':'🇮🇷';
+  document.getElementById('cur-label').textContent=cur;
+}
+function toggleCurrency(){
+  displayCurrency=displayCurrency==='afn'?'irr':'afn';
+  updateBalanceDisplay();
+}
+
+function updateWalletPage(){
+  if(!currentUser)return;
+  const afn=currentUser.wallet_afn||0;
+  const irr=Math.round(afn*AFN_TO_IRR);
+  const val=displayCurrency==='afn'?afn:irr;
+  document.getElementById('wp-amount').textContent=nFa(val);
+  document.getElementById('wp-currency').textContent=displayCurrency==='afn'?'افغانی':'تومان';
+  document.getElementById('wp-afn').textContent=nFa(afn);
+  document.getElementById('wp-irr').textContent=nFa(irr);
+}
+
+function renderRecentTrans(){
+  const trans=(currentUser.transactions||[]).slice(-3).reverse();
+  const el=document.getElementById('recentTrans');
+  if(!trans.length){el.innerHTML='<div class="empty-trans">تراکنشی ندارید</div>';return;}
+  el.innerHTML=trans.map(t=>{
+    const isPlus=t.amount>=0;
+    return `<div class="trans-item">
+      <div class="ti-left">
+        <div class="ti-icon ${isPlus?'plus':'minus'}">${isPlus?'⬆️':'⬇️'}</div>
+        <div><div class="ti-desc">${t.desc}</div><div class="ti-date">${t.date}</div></div>
+      </div>
+      <div class="ti-amt ${isPlus?'plus':'minus'}">${isPlus?'+':''}${t.amount!==0?nFa(t.amount)+' افغ':''}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderTransFull(){
+  const trans=(currentUser?.transactions||[]).slice().reverse();
+  const el=document.getElementById('transFullList');
+  if(!trans.length){el.innerHTML='<div class="empty-trans">تراکنشی ندارید</div>';return;}
+  el.innerHTML=trans.map(t=>{
+    const isPlus=t.amount>=0;
+    return `<div class="trans-full-item">
+      <div class="ti-left">
+        <div class="ti-icon ${isPlus?'plus':'minus'}" style="width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;background:${isPlus?'rgba(34,197,94,.1)':'rgba(239,68,68,.1)'}">${isPlus?'⬆️':'⬇️'}</div>
+        <div><div class="ti-desc">${t.desc}</div><div class="ti-date">${t.date}</div></div>
+      </div>
+      <div class="ti-amt ${isPlus?'plus':'minus'}">${t.amount!==0?(isPlus?'+':'')+nFa(t.amount)+' افغ':'—'}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── PLANS STORY ──
+async function loadPlansStory(){
+  try{
+    const[plans,svcs]=await Promise.all([api('plans'),api('services',{filter:'status=eq.available'})]);
+    const pm={};plans.forEach(p=>pm[p.id]=p);
+    const sm={};svcs.forEach(s=>sm[s.plan_id]=(sm[s.plan_id]||0)+1);
+    const row=document.getElementById('storyRow');
+    row.innerHTML=PLAN_DEFS.map(p=>{
+      const pd=pm[p.id]||{};
+      const stock=sm[p.id]||0;
+      const avail=stock>0&&pd.price_afn;
+      return `<div class="story-item" onclick="openBuyPlan('${p.id}')">
+        <div class="story-ring ${avail?'':'unavail'}">
+          <div class="story-inner">
+            <div class="story-gb">${p.gb?p.gb+'GB':'∞'}</div>
+            <div class="story-label">${p.icon}</div>
+          </div>
+        </div>
+        <div class="story-name">${p.name.replace('پلن ','')}</div>
+        <div class="story-price">${pd.price_afn?nFa(pd.price_afn)+' افغ':'—'}</div>
+      </div>`;
+    }).join('');
+  }catch(e){document.getElementById('storyRow').innerHTML='<div style="color:var(--muted);font-size:.8rem;padding:8px">خطا در بارگذاری</div>';}
+}
+
+// ── BUY PLAN ──
+let buyPlanId=null;
+function openBuyPlan(planId){
+  if(!currentUser)return;
+  const u=currentUser;
+  const level=u.level||'bronze';
+  const planDef=PLAN_DEFS.find(p=>p.id===planId);
+  // check level
+  if(level==='bronze'){
+    showNotify('سطح برنزی امکان خرید ندارد — سطح نقره‌ای را فعال کنید');
+    setTimeout(()=>openUpgrade(),800);return;
+  }
+  if(level==='silver'&&planDef.gb&&planDef.gb>10){
+    showNotify('سطح نقره‌ای فقط تا ۱۰ گیگ — سطح طلایی لازم است');
+    setTimeout(()=>openUpgrade(),800);return;
+  }
+  buyPlanId=planId;
+  document.getElementById('bp-name').textContent=planDef.name;
+  showModalStep('bp-s1');
+  document.getElementById('buyOverlay').classList.add('open');
+  renderBuyConfirm(planId);
+}
+
+async function renderBuyConfirm(planId){
+  try{
+    const plans=await api('plans',{filter:`id=eq.${planId}`});
+    const pd=plans[0]||{};
+    document.getElementById('bp-price').textContent=(pd.price_afn||0)+' افغانی'+(pd.price_irr?' / '+nFa(pd.price_irr)+' تومان':'');
+    const warn=document.getElementById('bp-warn');
+    if((currentUser.wallet_afn||0)<pd.price_afn){
+      warn.textContent='موجودی کافی نیست. موجودی: '+nFa(currentUser.wallet_afn)+' | قیمت: '+nFa(pd.price_afn);
+      warn.style.display='block';
+    }else{warn.style.display='none';}
+    document.getElementById('bp-msg').textContent=`مبلغ ${nFa(pd.price_afn)} افغانی از کیف پول کسر می‌شود.`;
+  }catch{}
+}
+
+async function confirmBuy(){
+  if(!currentUser||!buyPlanId)return;
+  loading(true);
+  try{
+    const[plans,svcs]=await Promise.all([
+      api('plans',{filter:`id=eq.${buyPlanId}`}),
+      api('services',{filter:`plan_id=eq.${buyPlanId}&status=eq.available`})
+    ]);
+    const pd=plans[0];const svc=svcs[0];
+    if(!pd||!svc){showNotify('سرویسی موجود نیست');closeO('buyOverlay');return;}
+    if((currentUser.wallet_afn||0)<pd.price_afn){showNotify('موجودی کافی نیست');return;}
+    const planDef=PLAN_DEFS.find(p=>p.id===buyPlanId);
+    const newWallet=(currentUser.wallet_afn||0)-pd.price_afn;
+    const newTrans=[...(currentUser.transactions||[]),{desc:'خرید '+planDef.name,amount:-pd.price_afn,type:'buy',date:new Date().toLocaleDateString('fa-IR')}];
+    const newPlan={planId:buyPlanId,name:planDef.name,gb:planDef.gb,username:svc.username,password:svc.password,boughtAt:new Date().toLocaleDateString('fa-IR')};
+    await Promise.all([
+      apiUp('users',`id=eq.${currentUser.id}`,{wallet_afn:newWallet,active_plan:newPlan,transactions:newTrans}),
+      apiUp('services',`id=eq.${svc.id}`,{status:'sold',sold_to:currentUser.id,sold_at:new Date().toLocaleDateString('fa-IR'),buyer_name:currentUser.name,buyer_village:currentUser.village})
+    ]);
+    currentUser.wallet_afn=newWallet;currentUser.active_plan=newPlan;currentUser.transactions=newTrans;
+    updateDashUI();loadPlansStory();
+    document.getElementById('bp-ok').textContent=`${planDef.name} فعال شد! نام کاربری: ${svc.username} | رمز: ${svc.password}`;
+    showModalStep('bp-s2');
+  }catch(e){showNotify('خطا: '+e.message);}
+  finally{loading(false);}
+}
+
+// ── LEVEL / UPGRADE ──
+function openLevelModal(){document.getElementById('levelOverlay').classList.add('open');}
+function openUpgrade(){closeO('levelOverlay');showModalStep('up-s1');document.getElementById('upgradeOverlay').classList.add('open');}
+
+function upgradeSelect(type){
+  if(type==='silver')showModalStep('up-s-silver');
+  else{
+    // fill gold receipt
+    document.getElementById('gr-name').textContent=currentUser.name;
+    document.getElementById('gr-id').textContent=currentUser.id;
+    document.getElementById('gr-level').textContent={bronze:'برنزی',silver:'نقره‌ای',gold:'طلایی'}[currentUser.level||'bronze'];
+    document.getElementById('gr-village').textContent=currentUser.village||'—';
+    document.getElementById('gr-date').textContent=new Date().toLocaleDateString('fa-IR');
+    document.getElementById('gr-code').textContent='کد: GR-'+Math.floor(10000+Math.random()*90000);
+    showModalStep('up-s-gold');
+  }
+}
+
+// Silver: simulate code send (real email needs backend)
+let silverVerifyCode='';
+function sendSilverCode(){
+  const email=document.getElementById('sv-email').value.trim();
+  const err=document.getElementById('sv-err');
+  err.classList.remove('show');
+  if(!email||!email.includes('@')){err.textContent='ایمیل معتبر وارد کنید';err.classList.add('show');return;}
+  silverVerifyCode=String(Math.floor(100000+Math.random()*900000));
+  // In real world: send to email via backend
+  // For now: show code in notify (demo)
+  showNotify('کد تأیید: '+silverVerifyCode+' (دمو)');
+  document.getElementById('sv-code-sub').textContent='کد به '+email+' ارسال شد';
+  showModalStep('up-s-silver2');
+}
+
+async function verifySilverCode(){
+  const inp=document.getElementById('sv-code-inp').value.trim();
+  const err=document.getElementById('sv-code-err');
+  err.classList.remove('show');
+  if(inp!==silverVerifyCode){err.textContent='کد اشتباه است';err.classList.add('show');return;}
+  loading(true);
+  try{
+    const newTrans=[...(currentUser.transactions||[]),{desc:'ارتقاء به سطح نقره‌ای',amount:0,type:'upgrade',date:new Date().toLocaleDateString('fa-IR')}];
+    await apiUp('users',`id=eq.${currentUser.id}`,{level:'silver',email:document.getElementById('sv-email').value,transactions:newTrans});
+    currentUser.level='silver';currentUser.transactions=newTrans;
+    updateDashUI();closeO('upgradeOverlay');
+    showNotify('🥈 سطح نقره‌ای فعال شد!');
+  }catch(e){showNotify('خطا: '+e.message);}
+  finally{loading(false);}
+}
+
+function sendGoldRequest(){
+  const txt=`درخواست ارتقاء سطح طلایی فارس روت\nنام: ${currentUser.name}\nآیدی: ${currentUser.id}\nقریه: ${currentUser.village}\nسطح فعلی: ${currentUser.level}\nتاریخ: ${new Date().toLocaleDateString('fa-IR')}`;
+  const waUrl=`https://wa.me/989929697774?text=${encodeURIComponent(txt)}`;
+  window.open(waUrl,'_blank');
+}
+
+// ── WALLET CHARGE ──
+let chCurrency='afn';let chAmount=0;
+function openChargeWallet(){
+  const u=currentUser;
+  const level=u?.level||'bronze';
+  if(level==='bronze'){showNotify('سطح برنزی امکان شارژ ندارد — سطح نقره‌ای را فعال کنید');setTimeout(()=>openUpgrade(),800);return;}
+  document.querySelectorAll('.cur-btn').forEach(b=>b.classList.remove('sel'));
+  chAmount=0;
+  showModalStep('ch-s1');
+  document.getElementById('chargeOverlay').classList.add('open');
+}
+
+function chSelectCur(c,el){
+  chCurrency=c;
+  document.querySelectorAll('.cur-btn').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('ch-cur-label').textContent=c==='afn'?'مقدار (افغانی)':'مقدار (تومان)';
+  const amts=c==='afn'?[100,200,500,1000,2000,5000]:[5000,10000,20000,50000,100000,200000];
+  document.getElementById('ch-amts').innerHTML=amts.map(a=>`<div class="amt-opt" onclick="chSelAmt(${a},this)">${nFa(a)}</div>`).join('');
+  chAmount=0;document.getElementById('ch-custom').value='';
+  showModalStep('ch-s2');
+}
+function chSelAmt(a,el){chAmount=a;document.querySelectorAll('.amt-opt').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');document.getElementById('ch-custom').value='';}
+async function chGoReceipt(){
+  const custom=parseInt(document.getElementById('ch-custom').value);
+  if(custom>0)chAmount=custom;
+  if(!chAmount||chAmount<1){showNotify('مقدار را انتخاب کنید');return;}
+  // silver limit check
+  const level=currentUser?.level||'bronze';
+  if(level==='silver'){
+    const limitAfn=1000;const limitIrr=10000000;
+    if(chCurrency==='afn'&&chAmount>limitAfn){showNotify('سطح نقره‌ای حداکثر ۱,۰۰۰ افغانی — سطح طلایی لازم است');return;}
+    if(chCurrency==='irr'&&chAmount>limitIrr){showNotify('سطح نقره‌ای حداکثر ۱۰ میلیون تومان — سطح طلایی لازم است');return;}
+  }
+  document.getElementById('ch-rc-name').textContent=currentUser.name;
+  document.getElementById('ch-rc-amt').textContent=nFa(chAmount)+(chCurrency==='afn'?' افغانی':' تومان');
+  document.getElementById('ch-rc-code').textContent='WR-'+Math.floor(10000+Math.random()*90000);
+  document.getElementById('ch-rc-date').textContent=new Date().toLocaleDateString('fa-IR');
+  showModalStep('ch-s3');
+}
+async function chSendReq(){
+  loading(true);
+  try{
+    await api('wallet_requests',{method:'POST',body:{id:'WR-'+Date.now(),user_id:currentUser.id,user_name:currentUser.name,user_village:currentUser.village,amount:chAmount,currency:chCurrency,status:'pending',created_at:new Date().toLocaleDateString('fa-IR')}});
+    const newTrans=[...(currentUser.transactions||[]),{desc:'درخواست شارژ '+nFa(chAmount)+(chCurrency==='afn'?' افغ':' تومان'),amount:0,type:'charge_req',date:new Date().toLocaleDateString('fa-IR')}];
+    await apiUp('users',`id=eq.${currentUser.id}`,{transactions:newTrans});
+    currentUser.transactions=newTrans;
+    showModalStep('ch-s4');showNotify('✅ درخواست ارسال شد');
+  }catch(e){showNotify('خطا: '+e.message);}
+  finally{loading(false);}
+}
+
+function openConvert(){showNotify('⚠️ تبدیل موجودی غیرفعال است — با پشتیبانی تماس بگیرید');}
+
+// ── VILLAGE ──
+function renderVDOpts(q){
+  const opts=document.getElementById('vdOpts');
+  const f=VILLAGES.filter(v=>!q||v.includes(q));
+  opts.innerHTML=f.length?f.map((v,i)=>`<div class="vd-opt" onclick="selVillage('${v}')"><span class="vd-opt-num">${i+1}</span>${v}</div>`).join(''):'<div style="padding:10px 14px;font-size:.82rem;color:var(--muted)">یافت نشد</div>';
+}
+function toggleVD(){const l=document.getElementById('vdList');l.classList.toggle('open');if(l.classList.contains('open')){renderVDOpts('');document.getElementById('vd-srch').focus();}}
+function filterVD(){renderVDOpts(document.getElementById('vd-srch').value);}
+function selVillage(v){document.getElementById('rg-village').value=v;document.getElementById('vd-disp').value=v;document.getElementById('vdList').classList.remove('open');}
+document.addEventListener('click',e=>{const w=document.getElementById('villageWrap');if(w&&!w.contains(e.target))document.getElementById('vdList').classList.remove('open');});
+
+// ── OVERLAYS CLOSE ──
+['levelOverlay','upgradeOverlay','chargeOverlay','buyOverlay'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el)el.addEventListener('click',function(e){if(e.target===this)closeO(id);});
+});
+
+// ── INIT ──
+(async function(){
+  // Init page display
+  document.querySelectorAll('.page').forEach(p=>{p.style.display='none';});
+  document.getElementById('loginPage').style.display='flex';
+  document.getElementById('loginPage').classList.add('active');
+
+  const sess=getSession();
+  if(!sess)return;
+  loading(true);
+  try{
+    const users=await api('users',{filter:`id=eq.${sess.userId}`});
+    if(users.length&&users[0].status!=='blocked'){
+      enterDash(users[0]);
+    }else{clearSession();}
+  }catch{}
+  finally{loading(false);}
+})();
+</script>
+</body>
+</html>
